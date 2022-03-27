@@ -1,6 +1,7 @@
 from itertools import product
 from django.shortcuts import render
 from django.views.generic.list import ListView
+from django.views.generic.detail import DetailView
 from django.views import View
 from django.http import HttpResponse
 from .models import Product
@@ -13,9 +14,11 @@ class ListProduct(ListView):
     paginate_by = 3
 
 
-class DetailsProduct(View):
-    def get(self, *args, **kwargs):
-        return HttpResponse('DetailsProduct')
+class DetailsProduct(DetailView):
+    model = Product
+    template_name = 'products/detail.html'
+    context_object_name = 'product'
+    slug_url_kwarg = 'slug'
 
 
 class AddToCart(View):

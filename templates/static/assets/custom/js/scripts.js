@@ -1,24 +1,24 @@
 (function () {
-    select_variacao = document.getElementById('select-variacoes');
-    variation_preco = document.getElementById('variation-preco');
-    variation_preco_promocional = document.getElementById('variation-preco-promocional');
+    select_variation = document.getElementById('select-variation');
+    variation_price = document.getElementById('variation-price');
+    variation_promo = document.getElementById('variation-promo');
 
-    if (!select_variacao) {
+    if (!select_variation) {
         return;
     }
 
-    if (!variation_preco) {
+    if (!variation_price) {
         return;
     }
 
-    select_variacao.addEventListener('change', function () {
-        preco = this.options[this.selectedIndex].getAttribute('data-preco');
-        preco_promocional = this.options[this.selectedIndex].getAttribute('data-preco-promocional');
+    select_variation.addEventListener('change', function () {
+        price = this.options[this.selectedIndex].getAttribute('date-price');
+        promo = this.options[this.selectedIndex].getAttribute('date-promo');
 
-        variation_preco.innerHTML = preco;
+        variation_price.innerHTML = price;
 
-        if (variation_preco_promocional) {
-            variation_preco_promocional.innerHTML = preco_promocional;
+        if (variation_promo) {
+            variation_promo.innerHTML = promo;
         }
     })
 })();
