@@ -8,3 +8,8 @@ register = Library()
 @register.filter
 def formatprice(price):
     return utils.formatprice(price)
+
+
+@register.filter
+def quanttotalcart(cart):
+    return utils.quanttotalcart(cart)
