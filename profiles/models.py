@@ -58,10 +58,10 @@ class Profile(models.Model):
     def clean(self):
         errormsg = {}
 
-        if not validatecpf(self.cpf):
-            errormsg['cpf'] = 'CPF Inválido!'
+        # if not validatecpf(self.cpf):
+        #    errormsg['cpf'] = 'CPF Inválido!'
 
-        if re.search(r'[^0-9]', self.zipcode) or len(self.zipcode) < 10:
+        if re.search(r'[^0-9]', self.zipcode) or len(self.zipcode) < 8:
             errormsg['zipcode'] = 'CEP Inválido!'
 
         if errormsg:

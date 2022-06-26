@@ -13,3 +13,8 @@ def formatprice(price):
 @register.filter
 def quanttotalcart(cart):
     return utils.quanttotalcart(cart)
+
+
+@register.filter
+def totalcart(cart):
+    return utils.totalcart(cart)

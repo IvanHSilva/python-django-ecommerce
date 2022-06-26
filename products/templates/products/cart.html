@@ -1,6 +1,5 @@
 {% extends 'base.html' %}
 {% load omfilters %}
-{% load static %}
 
 {% block content %}
 
@@ -9,64 +8,35 @@
 <div class="row mt-3">
     <div class="col">
         <h3>Carrinho de compras</h3>
-        <p class="lead">Os produtos, quantidades e preços que você escolheu.</p>
+        <p class="lead">Produtos no seu carrinho.</p>
+        {% include 'partials/_cart.html' %}
 
-        <div class="table-responsive">
-            <table class="table">
-                <tr>
-                    <th class="d-none d-lg-block">Imagem</th>
-                    <th>Produto</th>
-                    <th>V.</th>
-                    <th>QTD.</th>
-                    <th>Total</th>
-                </tr>
-
-                {% for prod in cart.values %}
-                <tr>
-                    <td class="d-none d-lg-block">
-                        <img class="cart-img" src="{% get_media_prefix %}{{prod.image}}">
-                    </td>
-                    <td>
-                        <a href="{% url 'products:detail' prod.slug %}">
-                            {{prod.prodname}}
-                        </a>
-                        <a class="ml-3" href="{% url 'products:removcart' %}?vid={{prod.varid}}">
-                            <i class="fas fa-times-circle text-danger" aria-hidden="true"></i>
-                        </a>
-                    </td>
-                    <td>{{prod.varname}}</td>
-                    <td>{{prod.quant}}x</td>
-
-                    {% if prod.promo %}
-                    <td>{{prod.promo|formatprice}}</td>
-                    {% else %}
-                    <td>{{prod.price|formatprice}}</td>
-                    {% endif %}
-                </tr>
-                {% endfor %}
-
-            </table>
-        </div>
     </div>
 </div>
 
 <div class="row mt-3">
     <div class="col-lg">
-        <p class='lead'>Total no carrinho</p>
+        <p class='lead'>Total do carrinho</p>
 
         <div class='table-responsive'>
             <table class="table">
                 <tr>
                     <td class="font-weight-bold">Total</td>
-                    <td>R$100000</td>
+                    <td>{{cart|totalcart|formatprice}}</td>
                 </tr>
             </table>
         </div>
     </div>
     <div class="col-lg mt-auto">
-        <a class="btn btn-lg btn-block btn-primary" href="#">
+        {% if request.user.is_authenticated %}
+        <a class="btn btn-lg btn-block btn-primary" href="{% url 'products:finalize' %}">
             Finalizar a compra
         </a>
+        {% else %}
+        <a class="btn btn-lg btn-block btn-primary" href="{% url 'profiles:create' %}">
+            Fazer Login
+        </a>
+        {% endif %}
     </div>
 </div>
 

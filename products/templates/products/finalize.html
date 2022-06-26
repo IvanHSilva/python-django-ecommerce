@@ -1,0 +1,71 @@
+{% extends 'base.html' %}
+{% load omfilters%}
+
+{% block content %}
+
+<div class="row mb-5">
+    <div class="col-lg">
+        <h2>Resumo da compra</h2>
+
+        <p class="lead">Dados do usuário</p>
+        <p><a href="/profiles/update/">Editar dados</a></p>
+        <dl class="row">
+            <dt class="col-lg-2">Nome:</dt>
+            <dd class="col-lg-4">{{ user.first_name }}</dd>
+            <dt class="col-lg-2">Sobrenome:</dt>
+            <dd class="col-lg-4">{{ user.last_name }}</dd>
+
+            <dt class="col-lg-2">CPF:</dt>
+            <dd class="col-lg-4">{{ user.profile.cpf }}</dd>
+            <dt class="col-lg-2">Data de Nascimento:</dt>
+            <dd class="col-lg-4">{{ user.profile.birthdate }}</dd>
+
+            <dt class="col-lg-2">Telefone:</dt>
+            <dd class="col-lg-4">{{ user.profile.phone }}</dd>
+            <dt class="col-lg-2">E-Mail:</dt>
+            <dd class="col-lg-4">{{ user.email }}</dd>
+        </dl>
+
+        <p class="lead">Endereço</p>
+        <p><a href="/profiles/update/">Editar dados</a></p>
+        <dl class="row">
+            <dt class="col-lg-2">Endereço:</dt>
+            <dd class="col-lg-4">{{ user.profile.address }}</dd>
+            <dt class="col-lg-2">Número:</dt>
+            <dd class="col-lg-4">{{ user.profile.addnumber }}</dd>
+
+            <dt class="col-lg-2">Bairro:</dt>
+            <dd class="col-lg-4">{{ user.profile.district }}</dd>
+            <dt class="col-lg-2">Cidade:</dt>
+            <dd class="col-lg-4">{{ user.profile.city }}</dd>
+
+            <dt class="col-lg-2">Estado:</dt>
+            <dd class="col-lg-4">{{ user.profile.state }}</dd>
+            <dt class="col-lg-2">CEP:</dt>
+            <dd class="col-lg-4">{{ user.profile.zipcode }}</dd>
+        </dl>
+    </div>
+</div>
+
+<div class="row mt-3">
+    <div class="col">
+        <h3>Carrinho de compras</h3>
+        <p class="lead">Produtos no carrinho.</p>
+        {% include 'partials/_cart.html' %}
+    </div>
+</div>
+<div class="row mt-3">
+    <div class="col">
+        <p class="lead text-center"><strong>Total no carrinho:</strong> {{ cart|totalcart|formatprice }}.</p>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col">
+        <a class="btn btn-block btn-primary btn-lg" href="{% url 'orders:pay' %}">
+            Pagamento da compra
+        </a>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,3 +1,4 @@
+from multiprocessing import context
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
 from django.views.generic.detail import DetailView
@@ -5,6 +6,7 @@ from django.views import View
 from django.http import HttpResponse
 from django.contrib import messages
 from .models import Product, ProdVariation
+from profiles.models import Profile
 from pprint import pprint
 
 
@@ -144,4 +146,23 @@ class Cart(View):
 
 class FinalizeCart(View):
     def get(self, *args, **kwargs):
-        return HttpResponse('LogoutProfile')
+        if not self.request.user.is_authenticated:
+            return redirect('profiles:create')
+
+        profile = Profile.objects.filter(user=self.request.user).exists()
+        if not profile:
+            messages.error(self.request, 'Usuário sem perfil cadastrado')
+            return redirect('profiles:create')
+
+        if not self.request.session.get('cart'):
+            messages.error(self.request, 'Carrinho vazio')
+            return redirect('products:list')
+
+        context = {
+            'user': self.request.user,
+            'cart': self.request.session.get('cart', {})
+        }
+
+        return render(self.request, 'products/finalize.html', context)
+
+        # return HttpResponse('LogoutProfile')
