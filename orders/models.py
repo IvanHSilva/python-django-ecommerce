@@ -5,6 +5,7 @@ from django.contrib.auth.models import User
 class Order(models.Model):
     user = models.ForeignKey(
         User, verbose_name='usuário', on_delete=models.DO_NOTHING)
+    quantity = models.PositiveIntegerField(verbose_name='quantidade')
     total = models.FloatField(verbose_name='total')
     status = models.CharField(default='A', max_length=1, verbose_name='status',
                               choices=(
@@ -12,12 +13,12 @@ class Order(models.Model):
                                   ('A', 'Aprovado'),
                                   ('R', 'Reprovado'),
                                   ('P', 'Pendente'),
-                                  ('E', 'Enviado'),
+                                  ('V', 'Enviado'),
                                   ('F', 'Finalizado'),
                               ))
 
     def __str__(self) -> str:
-        return f'Pedido nº {self.pk}'
+        return f'Pedido {self.pk}'
 
     class Meta:
         verbose_name = 'Pedido'

@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+{% block title %}{{order}} | {% endblock %}
+{% load static %}
+{% load omfilters %}
+
+{% block content %}
+
+{% include 'partials/_order.html' %}
+
+{% endblock %}

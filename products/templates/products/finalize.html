@@ -1,6 +1,8 @@
 {% extends 'base.html' %}
 {% load omfilters%}
 
+{% block title %} Resumo da Compa | {% endblock %}
+
 {% block content %}
 
 <div class="row mb-5">
@@ -62,7 +64,7 @@
 
 <div class="row">
     <div class="col">
-        <a class="btn btn-block btn-primary btn-lg" href="{% url 'orders:pay' %}">
+        <a class="btn btn-block btn-primary btn-lg" href="{% url 'orders:save' %}">
             Pagamento da compra
         </a>
     </div>
