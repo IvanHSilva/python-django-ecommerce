@@ -1,3 +1,4 @@
+from django.db.models import Q
 from multiprocessing import context
 from django.shortcuts import render, redirect, reverse, get_object_or_404
 from django.views.generic.list import ListView
@@ -166,3 +167,22 @@ class FinalizeCart(View):
         return render(self.request, 'products/finalize.html', context)
 
         # return HttpResponse('LogoutProfile')
+
+
+class Search(ListProduct):
+    def get_queryset(self, *args, **kwargs):
+        text = self.request.GET.get('text') or self.request.session['text']
+        qs = super().get_queryset(*args, **kwargs)
+
+        if not text:
+            return qs
+
+        self.request.session['text'] = text
+
+        qs = qs.filter(
+            Q(name__icontains=text) |
+            Q(description__icontains=text)
+        )
+        self.request.session.save()
+
+        return qs

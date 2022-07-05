@@ -58,6 +58,15 @@ class Profile(models.Model):
     def clean(self):
         errormsg = {}
 
+        sendedcpf = self.cpf or None
+        savedcpf = None
+        profile = Profile.objects.filter(cpf=sendedcpf).first()
+
+        if profile:
+            savedcpf = profile.cpf
+            if savedcpf is not None and self.pk != profile.pk:
+                errormsg['cpf'] = 'CPF Já Existente!'
+
         # if not validatecpf(self.cpf):
         #    errormsg['cpf'] = 'CPF Inválido!'
 
